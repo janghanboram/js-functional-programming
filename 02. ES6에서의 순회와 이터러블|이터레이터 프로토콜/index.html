@@ -80,7 +80,36 @@
 ### 사용자 정의 이터러블을 통해 알아보기
 
 <script>
+  console.clear();
+  const iterable = {
+    [Symbol.iterator]: function() {
+      var limit = 3;
+      return {
+        next() {
+          return limit < 1 ? { done: true } : { value: limit--, done: false }
+        },
+        [Symbol.iterator]: function() { return this; }
+      }
+    }
+  };
+  const iter4 = iterable[Symbol.iterator]();
+  log( iter4.next() );
+  log( iter4.next() );
+  // log( iter4 == iter4[Symbol.iterator]() );
+  for (const a of iter4) {
+    log(a);
+  }
 
+  // const arr2 = [1, 2, 3];
+  // const iter5 = arr2[Symbol.iterator]();
+  // log( iter5.next() );
+  // for (const a of iter5) {
+  //   log(a);
+  // }
+
+  for (const a of document.querySelectorAll('*')) {
+    log(a);
+  }
 </script>
 
 ## 이터러블/이터레이터 프로토콜
@@ -91,5 +120,9 @@
 ## 전개 연산자
 
 <script>
+  console.clear();
 
+  const list3 = [1, 2];
+
+  log( [...map.keys(), ...iterable, ...list3] );
 </script>
